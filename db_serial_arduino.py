@@ -4,7 +4,7 @@ import mysql.connector
 def main():
 
 	try:
-		bd = mysql.connector.connect(user='gesep', password='Q1w2e3rtghnjmk,.;!',host='localhost',database='gesep')
+		bd = mysql.connector.connect(user='gesep', password='Q1w2e3rtghnjmk,.;!',host='127.0.0.1',database='gesep')
 		#bd = mysql.connector.connect(user='root', password='raspberry',host='10.0.0.150',database='sensores')
 		cursor = bd.cursor()
 
@@ -62,6 +62,6 @@ def main():
 				cursor.execute(insert)
 			bd.commit()
 	except:
-		main()
+		print('deu merda')
 
 main()
