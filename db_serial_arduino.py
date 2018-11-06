@@ -1,62 +1,67 @@
 import serial
 import mysql.connector
 
-bd = mysql.connector.connect(user='root', password='raspberry',host='192.168.0.140',database='sensores')
-#bd = mysql.connector.connect(user='root', password='raspberry',host='10.0.0.150',database='sensores')
-cursor = bd.cursor()
+def main():
 
-ser = serial.Serial("/dev/ttyS0",9600)
+	try:
+		bd = mysql.connector.connect(user='gesep', password='Q1w2e3rtghnjmk,.;!',host='localhost',database='gesep')
+		#bd = mysql.connector.connect(user='root', password='raspberry',host='10.0.0.150',database='sensores')
+		cursor = bd.cursor()
 
-while(True):
-	verifica_inicio = ser.read(1)
-	if(verifica_inicio=='T'):
-		break
+		ser = serial.Serial("/dev/ttyS0",9600)
 
-while(True):
-	ident = ser.read(1)
-	if ident == 'a':
-		buf = ser.read(1)
-		leitura = str(ser.read(int(buf)))
-		ins = ("INSERT INTO bh1750 (COD,leitura) VALUES (uuid(),"+leitura+")")
-		cursor.execute(ins)
-	elif ident == 'b':
-		buf = ser.read(1)
-		leitura = str(ser.read(int(buf)))
-		ins = ("INSERT INTO bmp180 (COD,leitura) VALUES (uuid(),"+leitura+")")
-		cursor.execute(ins)
-	elif ident == 'c':
-		buf = ser.read(1)
-		leitura = str(ser.read(int(buf)))
-		ins = ("INSERT INTO LDR (COD,id,leitura) VALUES (uuid(),'1',"+leitura+")")
-		cursor.execute(ins)
-	elif ident == 'd':
-		buf = ser.read(1)
-		print("O buffer foi: "+buf)
-		leitura = str(ser.read(int(buf)))
-		ins = ("INSERT INTO LDR (COD,id,leitura) VALUES (uuid(),'2',"+leitura+")")
-		cursor.execute(ins)
-	elif ident == 'e':
-		buf = ser.read(1)
-		leitura = str(ser.read(int(buf)))
-		ins = ("INSERT INTO LDR (COD,id,leitura) VALUES (uuid(),'3',"+leitura+")")
-		cursor.execute(ins)
-	elif ident == 'f':
-		buf = ser.read(1)
-		ir = str(ser.read(int(buf))) 
-		buf = ser.read(1)
-		full = str(ser.read(int(buf))) 
-		buf = ser.read(1)
-		vi = str(ser.read(int(buf))) 
-		buf = ser.read(1)
-		lx = str(ser.read(int(buf)))
-		ins = ("INSERT INTO tsl2561 (COD,full,infra,visivel,lux) VALUES (uuid(),"+full+","+ir+","+vi+","+lx+")") 
-		cursor.execute(ins)
-	elif ident == 'g':
-		buf = ser.read(1)
-		leitura = str(ser.read(int(buf)))
-		ins = ("INSERT INTO temt6000 (COD,leitura) VALUES (uuid(),"+leitura+")")
-		cursor.execute(ins)
-	bd.commit()
+		while(True):
+			verifica_inicio = ser.read(1)
+			if(verifica_inicio=='T'):
+				break
 
-cursor.close()
-bd.close()
+		while(True):
+			ident = ser.read(1)
+			if ident == 'a':
+				buffer = ser.read(1)
+				temp = str(ser.read(int(buffer)))
+				buffer = ser.read(1)
+				umid = str(ser.read(int(buffer)))
+				insert = ("INSERT INTO dht (COD, temp, umidade) VALUES (uuid(),"+temp+","+umidade+")")
+				cursor.execute(insert)
+			elif ident == 'b':
+				buffer = ser.read(1)
+				leitura = str(ser.read(int(buffer)))
+				insert = ("INSERT INTO ldr (COD, id, leitura) VALUES (uuid(),'1k',"+leitura+")")
+				cursor.execute(insert)
+			elif ident == 'c':
+				buffer = ser.read(1)
+				leitura = str(ser.read(int(buffer)))
+				insert = ("INSERT INTO ldr (COD, id, leitura) VALUES (uuid(),'750',"+leitura+")")
+				cursor.execute(insert)
+			elif ident == 'd':
+				buffer = ser.read(1)
+				leitura = str(ser.read(int(buffer)))
+				insert = ("INSERT INTO ldr (COD, id, leitura) VALUES (uuid(),'470',"+leitura+")")
+				cursor.execute(insert)
+			elif ident == 'e':
+				buffer = ser.read(1)
+				cpainel = str(ser.read(int(buffer)))
+				buffer = ser.read(1)
+				csensor = str(ser.read(int(buffer)))
+				buffer = ser.read(1)
+				tpainel = str(ser.read(int(buffer)))
+				buffer = ser.read(1)
+				tsensor = str(ser.read(int(buffer)))
+				insert = ("INSERT INTO tenCorrent (COD, correntePainel, correnteSensor, tensaoPainel, tensaoSensor) VALUES (uuid(),"+cpainel+","+csensor+","+tpainel+","+tsensor+")")
+				cursor.execute(insert)
+			elif ident == 'f':
+				buffer = ser.read(1)
+				ir = str(ser.read(int(buffer))) 
+				insert = ("INSERT INTO piranometro (COD,leitura) VALUES (uuid(),"+ir+")") 
+				cursor.execute(insert)
+			elif ident == 'g':
+				buffer = ser.read(1)
+				leitura = str(ser.read(int(buffer)))
+				insert = ("INSERT INTO termopar (COD,leitura) VALUES (uuid(),"+leitura+")")
+				cursor.execute(insert)
+			bd.commit()
+	except:
+		main()
+
+main()
