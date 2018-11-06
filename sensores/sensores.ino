@@ -88,10 +88,10 @@ void postDHT(){
   // Leitura da temperatura (Celsius)
   double t = dht.readTemperature();
   Serial.write("a");
-  Serial.write(String(String(h).length()).c_str());
-  Serial.write(String(h).c_str());
-  Serial.write(String(String(t).length()).c_str());
-  Serial.write(String(t).c_str());
+  Serial.write(String(String(h,2).length()).c_str());
+  Serial.write(String(h,2).c_str());
+  Serial.write(String(String(t,2).length()).c_str());
+  Serial.write(String(t,2).c_str());
 
   delay(200);
 
@@ -105,24 +105,24 @@ void postLDRs(){
   V_1k = 0.0048828125*VAL11;
 
   Serial.write("b");
-  Serial.write(String(String(V_1k).length()).c_str());
-  Serial.write(String(V_1k).c_str());  
-  delay(100);
+  Serial.write(String(String(V_1k,3).length()).c_str());
+  Serial.write(String(V_1k,3).c_str());  
+  delay(200);
 
   VAL22 = analogRead(LDR_750);   
   V_750 = 0.0048828125*VAL22;
 
   Serial.write("c");
-  Serial.write(String(String(V_750).length()).c_str());
-  Serial.write(String(V_750).c_str());  
-  delay(100);
+  Serial.write(String(String(V_750,3).length()).c_str());
+  Serial.write(String(V_750,3).c_str());  
+  delay(200);
 
   VAL33 = analogRead(LDR_470);   
   V_470 = 0.0048828125*VAL33;
 
   Serial.write("d");
-  Serial.write(String(String(V_470).length()).c_str());
-  Serial.write(String(V_470).c_str());  
+  Serial.write(String(String(V_470,3).length()).c_str());
+  Serial.write(String(V_470,3).c_str());  
   
   delay(200); 
 }
@@ -139,14 +139,15 @@ void postTenCor(){
   V1 = 1.006*V-0.001387;
 
   Serial.write('e'); 
-  Serial.write(String(String(I).length()).c_str());
-  Serial.write(String(I).c_str());
-  Serial.write(String(String(Corrente2).length()).c_str());
-  Serial.write(String(Corrente2).c_str());
-  Serial.write(String(String(V1).length()).c_str());
-  Serial.write(String(V1).c_str());
-  Serial.write(String(String(Tensao2).length()).c_str());
-  Serial.write(String(Tensao2).c_str());
+  Serial.write(String(String(I,3).length()).c_str());
+  Serial.write(String(I,3).c_str());
+  Serial.write(String(String(Corrente2,3).length()).c_str());
+  Serial.write(String(Corrente2,3).c_str());
+  delay(200);
+  Serial.write(String(String(V1,3).length()).c_str());
+  Serial.write(String(V1,3).c_str());
+  Serial.write(String(String(Tensao2,3).length()).c_str());
+  Serial.write(String(Tensao2,3).c_str());
 
   delay(200);
 }
@@ -165,8 +166,10 @@ void postPiranometro(){
 
   Ir = (1000/(0.01244))*ads_Voltage_ch2;
   Serial.write('f'); 
-  Serial.write(String(String(Ir).length()).c_str());
-  Serial.write(String(Ir).c_str());
+  Serial.write(String(String(Ir,3).length()).c_str());
+  Serial.write(String(Ir,3).c_str());
+  Serial.write(String(String(ads_Voltage_ch2,3).length()).c_str());
+  Serial.write(String(ads_Voltage_ch2,3).c_str());
 
   delay(200);
 }
@@ -182,7 +185,9 @@ void postTermopar(){
   Temp = 25707*ads_Voltage_ch3 - 567756*ads_Voltage_ch3*ads_Voltage_ch3 + 0.0339;
 
   Serial.write('g'); 
-  Serial.write(String(String(Temp).length()).c_str());
-  Serial.write(String(Temp).c_str());
+  Serial.write(String(String(Temp,3).length()).c_str());
+  Serial.write(String(Temp,3).c_str());
+  Serial.write(String(String(ads_Voltage_ch3,3).length()).c_str());
+  Serial.write(String(ads_Voltage_ch3,3).c_str());
   delay(200);
 }
