@@ -1,69 +1,69 @@
 import mysql.connector
 import datetime
 
-bd_local = mysql.connector.connect(user='root', password='raspberry',host='192.168.0.140',database='sensores')
+bd_local = mysql.connector.connect(user='gesep', password='Q1w2e3rtghnjmk,.;!',host='127.0.0.1',database='gesep')
 cursor = bd_local.cursor()
 
-bd_cloud = mysql.connector.connect(user='root', password='q1w2e3rtghnjmk,.;!',host='35.198.12.124',database='sensores')
+bd_cloud = mysql.connector.connect(user='root', password='q1w2e3rtghnjmk,.;!',host='35.198.12.124',database='gesep')
 cursor2 = bd_cloud.cursor()
 
 
-query = ("SELECT COD, leitura, data FROM bh1750 ")
+query = ("SELECT COD, temp, umidade, data FROM dht ")
 cursor.execute(query)
 registros = cursor.fetchall()
-for (COD, leitura, data) in registros:
-    ins = "INSERT INTO bh1750 (COD,leitura, data, sync) VALUES ('"+COD+"',"+str(leitura)+",'"+data.strftime("%Y-%m-%d %H:%M:%S")+"', 1)"
+for (COD, temp, umidade, data) in registros:
+    ins = "INSERT INTO dht (COD, temp, umidade, sync) VALUES ('"+COD+"',"+str(temp)+","+str(umidade)+",'"+data.strftime("%Y-%m-%d %H:%M:%S")+"', 1)"
     cursor2.execute(ins)
     bd_cloud.commit()
-    delet = "DELETE FROM bh1750 WHERE `COD` = '"+COD+"' "
+    delet = "DELETE FROM dht WHERE `COD` = '"+COD+"' "
     cursor.execute(delet)
     bd_local.commit()
 
 
-query = ("SELECT COD, leitura, data FROM bmp180 ")
+query = ("SELECT COD, leitura, data FROM piranometro")
 cursor.execute(query)
 registros = cursor.fetchall()
 for (COD, leitura, data) in registros:
-    ins = "INSERT INTO bmp180 (COD,leitura, data, sync) VALUES ('"+COD+"',"+str(leitura)+",'"+data.strftime("%Y-%m-%d %H:%M:%S")+"', 1)"
+    ins = "INSERT INTO piranometro (COD,leitura, data, sync) VALUES ('"+COD+"',"+str(leitura)+",'"+data.strftime("%Y-%m-%d %H:%M:%S")+"', 1)"
     cursor2.execute(ins)
     bd_cloud.commit()
-    delet = "DELETE FROM bmp180 WHERE `COD` = '"+COD+"' "
+    delet = "DELETE FROM piranometro WHERE `COD` = '"+COD+"' "
     cursor.execute(delet)
     bd_local.commit()
 
 
-query = ("SELECT COD, id, leitura, data FROM LDR ")
+query = ("SELECT COD, id, leitura, data FROM ldr ")
 cursor.execute(query)
 registros = cursor.fetchall()
 for (COD, id, leitura, data) in registros:
-    ins = "INSERT INTO LDR (COD, id, leitura, data, sync) VALUES ('"+COD+"',"+str(id)+","+str(leitura)+",'"+data.strftime("%Y-%m-%d %H:%M:%S")+"', 1)"
+    ins = "INSERT INTO ldr (COD, id, leitura, data, sync) VALUES ('"+COD+"','"+id+"',"+str(leitura)+",'"+data.strftime("%Y-%m-%d %H:%M:%S")+"', 1)"
     cursor2.execute(ins)
     bd_cloud.commit()
-    delet = "DELETE FROM LDR WHERE `COD` = '"+COD+"' "
+    delet = "DELETE FROM ldr WHERE `COD` = '"+COD+"' "
     cursor.execute(delet)
     bd_local.commit()
 
 
-query = ("SELECT COD, leitura, data FROM temt6000 ")
+query = ("SELECT COD, leitura, data FROM termopar ")
 cursor.execute(query)
 registros = cursor.fetchall()
 for (COD, leitura, data) in registros:
-    ins = "INSERT INTO temt6000 (COD, leitura, data, sync) VALUES ('"+COD+"',"+str(leitura)+",'"+data.strftime("%Y-%m-%d %H:%M:%S")+"', 1)"
+    ins = "INSERT INTO termopar (COD, leitura, data, sync) VALUES ('"+COD+"',"+str(leitura)+",'"+data.strftime("%Y-%m-%d %H:%M:%S")+"', 1)"
     cursor2.execute(ins)
     bd_cloud.commit()
-    delet = "DELETE FROM temt6000 WHERE `COD` = '"+COD+"' "
+    delet = "DELETE FROM termopar WHERE `COD` = '"+COD+"' "
     cursor.execute(delet)
     bd_local.commit()
 
 
-query = ("SELECT COD, full, infra, lux, visivel, data FROM tsl2561 ")
+query = ("SELECT COD, tensaoPainel, tensaoSensor, correntePainel, correnteSensor, data FROM tenCorrente ")
 cursor.execute(query)
 registros = cursor.fetchall()
-for (COD, full, infra, lux, visivel, data) in registros:
-    ins = "INSERT INTO tsl2561 (COD, full, infra, lux, visivel, data, sync) VALUES ('"+COD+"',"+str(full)+","+str(infra)+","+str(lux)+","+str(visivel)+",'"+data.strftime("%Y-%m-%d %H:%M:%S")+"', 1)"
+for (COD, tensaoPainel, tensaoSensor, correntePainel, correnteSensor, data) in registros:
+    ins = "INSERT INTO tenCorrente (COD, tensaoPainel, tensaoSensor, correntePainel, correnteSensor, data, sync) VALUES ('"+COD+"',"+str(tensaoPainel)+","+str(tensaoSensor)+","+str(correntePainel)+","+str(correnteSensor)+",'"+data.strftime("%Y-%m-%d %H:%M:%S")+"', 1)"
     cursor2.execute(ins)
     bd_cloud.commit()
-    delet = "DELETE FROM tsl2561 WHERE `COD` = '"+COD+"' "
+    delet = "DELETE FROM tenCorrente WHERE `COD` = '"+COD+"' "
     cursor.execute(delet)
     bd_local.commit()
 
