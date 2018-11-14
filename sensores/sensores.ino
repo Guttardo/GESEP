@@ -75,9 +75,9 @@ void loop(void)
   postLDRs();
   postTenCor();
   postPiranometro();
-  postTermopar();
+ // postTermopar();
 
-  delay(5000);
+  delay(3000);
 
 }
 
@@ -161,15 +161,22 @@ void postPiranometro(){
   /* variaveis apra armazenar o valor RAW do adc */
 
   ads_ch2 = ads.readADC_SingleEnded(2);
-
-  ads_Voltage_ch2 = ads_ch2 * ads_bit_Voltage;
-
+  
+  
+  if(ads_ch2>0){
+    ads_Voltage_ch2 = ads_ch2 * ads_bit_Voltage;
+  }
+  
+  
+  
+  
   Ir = (1000/(0.01244))*ads_Voltage_ch2;
+  
   Serial.write('f'); 
   Serial.write(String(String(Ir,3).length()).c_str());
   Serial.write(String(Ir,3).c_str());
-  Serial.write(String(String(ads_Voltage_ch2,3).length()).c_str());
-  Serial.write(String(ads_Voltage_ch2,3).c_str());
+  Serial.write(String(String(ads_Voltage_ch2,4).length()).c_str());
+  Serial.write(String(ads_Voltage_ch2,4).c_str());
 
   delay(200);
 }
