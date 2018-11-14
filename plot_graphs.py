@@ -8,9 +8,9 @@ import datetime
 bd_cloud = mysql.connector.connect(user='gesep', password='Q1w2e3rtghnjmk,.;!',host='127.0.0.1',database='gesep')
 cursor = bd_cloud.cursor()
 
-sensor = "ldr"
+sensor = "tenCorrente"
 dateBegin = "'2018-11-14 11:10:00'"
-dateEnd = "'2018-11-14 11:30:00'"
+dateEnd = "'2018-11-14 12:30:00'"
 
 if(sensor=="ldr"):
     res = "1k"
@@ -35,13 +35,16 @@ elif (sensor=="tsl2561"):
     plt.plot([data for full,infra,lux,visivel,data in dados], [lux for full,infra,lux,visivel,data in dados],label='Lux', color='green')
     plt.legend()
 else:
-    ins = "SELECT leitura, data from "+ sensor +" where data>="+dateBegin+" and data<="+dateEnd+" order by data"
+    ins = "SELECT correntePainel from "+ sensor +" where data>="+dateBegin+" and data<="+dateEnd+" order by correntePainel"
     cursor.execute(ins)
     dados = cursor.fetchall()
-    plt.plot([data for leitura, data in dados], [leitura for leitura,data in dados])
+    ins = "SELECT leitura from piranometro" +" where data>="+dateBegin+" and data<="+dateEnd+" order by leitura"
+    cursor.execute(ins)
+    piranometro = cursor.fetchall()
+    plt.plot([correntePainel for correntePainel in dados], [leitura for leitura in piranometro])
 
 plt.gcf().autofmt_xdate()
-plt.xlabel('Tensão LDR (V)')
+plt.xlabel('Corrente na Placa (A)')
 plt.ylabel('Irradiância Piranômetro (W/m2)')
-plt.title(sensor)
+plt.title('Irradiância x Corrente')
 plt.show()
