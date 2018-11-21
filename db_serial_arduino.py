@@ -11,7 +11,7 @@ def main():
 		cursor = bd.cursor()
 		print('Sucesso!')
 		print('Iniciando comunicacao serial')
-		ser = serial.Serial("/dev/ttyUSB0")
+		ser = serial.Serial("/dev/ttyUSB0",115200)
 		print(ser.name)
 
 		while(True):

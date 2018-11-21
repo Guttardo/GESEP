@@ -45,7 +45,7 @@ double Tensao2 = 0;
 void setup(void) 
 {
   
-  Serial.begin(9600);
+  Serial.begin(115200);
   while (!Serial);
   
 //  ads.setGain(GAIN_TWOTHIRDS);  // 2/3x gain +/- 6.144V  1 bit = 3mV      0.1875mV (default)
@@ -77,7 +77,7 @@ void loop(void)
   postPiranometro();
  // postTermopar();
 
-  delay(3000);
+  delay(1000);
 
 }
 
@@ -93,7 +93,7 @@ void postDHT(){
   Serial.write(String(String(t,2).length()).c_str());
   Serial.write(String(t,2).c_str());
 
-  delay(200);
+
 
 }
 
@@ -107,7 +107,7 @@ void postLDRs(){
   Serial.write("b");
   Serial.write(String(String(V_1k,3).length()).c_str());
   Serial.write(String(V_1k,3).c_str());  
-  delay(200);
+  
 
   VAL22 = analogRead(LDR_750);   
   V_750 = 0.0048828125*VAL22;
@@ -115,7 +115,7 @@ void postLDRs(){
   Serial.write("c");
   Serial.write(String(String(V_750,3).length()).c_str());
   Serial.write(String(V_750,3).c_str());  
-  delay(200);
+  
 
   VAL33 = analogRead(LDR_470);   
   V_470 = 0.0048828125*VAL33;
@@ -124,7 +124,7 @@ void postLDRs(){
   Serial.write(String(String(V_470,3).length()).c_str());
   Serial.write(String(V_470,3).c_str());  
   
-  delay(200); 
+  
 }
 
 void postTenCor(){
@@ -143,13 +143,11 @@ void postTenCor(){
   Serial.write(String(I,3).c_str());
   Serial.write(String(String(Corrente2,3).length()).c_str());
   Serial.write(String(Corrente2,3).c_str());
-  delay(200);
   Serial.write(String(String(V1,3).length()).c_str());
   Serial.write(String(V1,3).c_str());
   Serial.write(String(String(Tensao2,3).length()).c_str());
   Serial.write(String(Tensao2,3).c_str());
 
-  delay(200);
 }
 
 void postPiranometro(){
@@ -178,7 +176,7 @@ void postPiranometro(){
   Serial.write(String(String(ads_Voltage_ch2,4).length()).c_str());
   Serial.write(String(ads_Voltage_ch2,4).c_str());
 
-  delay(200);
+  
 }
 
 void postTermopar(){
@@ -196,5 +194,5 @@ void postTermopar(){
   Serial.write(String(Temp,3).c_str());
   Serial.write(String(String(ads_Voltage_ch3,3).length()).c_str());
   Serial.write(String(ads_Voltage_ch3,3).c_str());
-  delay(200);
+  
 }
