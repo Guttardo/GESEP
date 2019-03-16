@@ -30,8 +30,9 @@ def main():
 				buffer = ser.read(1).decode('utf-8')
 				temp = ser.read(int(buffer)).decode('utf-8')
 				print('Temperatura (DHT): {}°C'.format(temp))
-				insert = ("INSERT INTO dht (COD, temp, umidade) VALUES (uuid(),"+temp+","+umid+")")
-				cursor.execute(insert)
+				if(temp != ' NAN'):
+					insert = ("INSERT INTO dht (COD, temp, umidade) VALUES (uuid(),"+temp+","+umid+")")
+					cursor.execute(insert)
 			elif ident == 'b':
 				buffer = ser.read(1).decode('utf-8')
 				leitura = ser.read(int(buffer)).decode('utf-8')
