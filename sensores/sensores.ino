@@ -12,6 +12,7 @@
 // Definicoes do sensor : pino, tipo
 DHT dht(DHTPIN, DHTTYPE);
 
+
 /* possibilidades/niveis de acordo com a resolução */
 #define   ADC_16BIT_MAX   65536
 
@@ -62,29 +63,27 @@ void setup(void)
   float ads_InputRange = 0.256f;
   /* no range de +-6.144V, 187.502uV/bit */
   ads_bit_Voltage = (ads_InputRange * 2) / (ADC_16BIT_MAX - 1);
-   
   dht.begin();
-
 }
 
 void loop(void) 
 { 
 
-  Serial.write('T');
+  Serial.write("T\n");
   postDHT();
   postLDRs();
   postTenCor();
   postPiranometro();
- // postTermopar();
+  //postTermopar();
 
-  delay(1000);
+  delay(3000);
 
 }
 
 void postDHT(){
-
+  
   // Leitura da umidade
-  double h = dht.readHumidity();
+  double h = dht.readHumidity();    
   // Leitura da temperatura (Celsius)
   double t = dht.readTemperature();
   Serial.write("a");
@@ -92,9 +91,6 @@ void postDHT(){
   Serial.write(String(h,2).c_str());
   Serial.write(String(String(t,2).length()).c_str());
   Serial.write(String(t,2).c_str());
-
-
-
 }
 
 void postLDRs(){
@@ -138,7 +134,7 @@ void postTenCor(){
   V = (40.57/4.02)*Tensao2;
   V1 = 1.006*V-0.001387;
 
-  Serial.write('e'); 
+  Serial.write('e');
   Serial.write(String(String(I,3).length()).c_str());
   Serial.write(String(I,3).c_str());
   Serial.write(String(String(Corrente2,3).length()).c_str());
