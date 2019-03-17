@@ -22,7 +22,8 @@ cursor = bd.cursor()
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 def main():
-    
+    hoje = datetime.date.today()
+    hoje = hoje.strftime('%Y-%m-%d')
     creds = None
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
@@ -39,17 +40,105 @@ def main():
 
     drive_service = build('drive', 'v3', credentials=creds)
     # Call the Drive v3 API
-    ins = "SELECT leitura, data from ldr where id='1k' and data>='2019-03-17 00:00:00' and data<='2019-03-17 23:59:59' order by data"  
+    ins = "SELECT leitura, data from ldr where id='1k' and data>='"+ hoje +" 00:00:00' and data<='"+ hoje +" 23:59:59' order by data"  
     cursor.execute(ins)
-    with open("ldr_1k_2019-03-17.csv", "w") as csv_file:              # Python 2 version
+    with open("ldr_1k_"+ hoje +".csv", "w") as csv_file:              # Python 2 version
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(['Leitura', 'Data']) # write headers
         csv_writer.writerows(cursor)
     file_metadata = {
-        'name': 'Testando Planilha',
+        'name': 'ldr_1k_'+hoje,
         'mimeType': 'application/vnd.google-apps.spreadsheet'
     }
-    media = MediaFileUpload('ldr_750_29-11.csv',
+    media = MediaFileUpload('ldr_1k_'+ hoje +'.csv',
+                            mimetype='text/csv',
+                            resumable=True)
+    file = drive_service.files().create(body=file_metadata,
+                                        media_body=media,
+                                        fields='id').execute()
+
+    ins = "SELECT leitura, data from ldr where id='750' and data>='"+ hoje +" 00:00:00' and data<='"+ hoje +" 23:59:59' order by data"  
+    cursor.execute(ins)
+    with open("ldr_750_"+ hoje +".csv", "w") as csv_file:              # Python 2 version
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(['Leitura', 'Data']) # write headers
+        csv_writer.writerows(cursor)
+    file_metadata = {
+        'name': 'ldr_750_'+hoje,
+        'mimeType': 'application/vnd.google-apps.spreadsheet'
+    }
+    media = MediaFileUpload('ldr_750_'+ hoje +'.csv',
+                            mimetype='text/csv',
+                            resumable=True)
+    file = drive_service.files().create(body=file_metadata,
+                                        media_body=media,
+                                        fields='id').execute()
+
+    ins = "SELECT leitura, data from ldr where id='470' and data>='"+ hoje +" 00:00:00' and data<='"+ hoje +" 23:59:59' order by data"  
+    cursor.execute(ins)
+    with open("ldr_470_"+ hoje +".csv", "w") as csv_file:              # Python 2 version
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(['Leitura', 'Data']) # write headers
+        csv_writer.writerows(cursor)
+    file_metadata = {
+        'name': 'ldr_470_'+hoje,
+        'mimeType': 'application/vnd.google-apps.spreadsheet'
+    }
+    media = MediaFileUpload('ldr_470_'+ hoje +'.csv',
+                            mimetype='text/csv',
+                            resumable=True)
+    file = drive_service.files().create(body=file_metadata,
+                                        media_body=media,
+                                        fields='id').execute()                                                                        
+
+    ins = "SELECT tensao,leitura,data from piranometro where data>='"+ hoje +" 00:00:00' and data<='"+ hoje +" 23:59:59' order by data"
+    cursor.execute(ins)
+    with open("piranometro_"+hoje+".csv", "w") as csv_file:              # Python 2 version
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(['Tensão','Leitura', 'Data']) # write headers
+        csv_writer.writerows(cursor)
+    
+    file_metadata = {
+        'name': 'piranometro_'+hoje,
+        'mimeType': 'application/vnd.google-apps.spreadsheet'
+    }
+    media = MediaFileUpload('piranometro'+ hoje +'.csv',
+                            mimetype='text/csv',
+                            resumable=True)
+    file = drive_service.files().create(body=file_metadata,
+                                        media_body=media,
+                                        fields='id').execute() 
+    
+    ins = "SELECT temp,umidade,data from dht where data>='"+ hoje +" 00:00:00' and data<='"+ hoje +" 23:59:59' order by data"
+    cursor.execute(ins)
+    with open("dht_"+hoje+".csv", "w") as csv_file:              # Python 2 version
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(['Temp','Umidade', 'Data']) # write headers
+        csv_writer.writerows(cursor)
+    
+    file_metadata = {
+        'name': 'dht_'+hoje,
+        'mimeType': 'application/vnd.google-apps.spreadsheet'
+    }
+    media = MediaFileUpload('dht'+ hoje +'.csv',
+                            mimetype='text/csv',
+                            resumable=True)
+    file = drive_service.files().create(body=file_metadata,
+                                        media_body=media,
+                                        fields='id').execute()
+    
+    ins = "SELECT tensaoPainel,tensaoSensor, correntePainel, correnteSensor,data from tenCorrente where data>='"+ hoje +" 00:00:00' and data<='"+ hoje +" 23:59:59' order by data"
+    cursor.execute(ins)
+    with open("tensao_corrente_"+hoje+".csv", "w") as csv_file:              # Python 2 version
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(['Tensao Painel','Tensao Sensor','Corrente Painel', 'Corrente Sensor', 'Data']) # write headers
+        csv_writer.writerows(cursor)
+
+    file_metadata = {
+        'name': 'tensao_corrente_'+hoje,
+        'mimeType': 'application/vnd.google-apps.spreadsheet'
+    }
+    media = MediaFileUpload('tensao_corrente'+ hoje +'.csv',
                             mimetype='text/csv',
                             resumable=True)
     file = drive_service.files().create(body=file_metadata,
