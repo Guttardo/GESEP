@@ -41,15 +41,13 @@ def main():
     drive_service = build('drive', 'v3', credentials=creds)
     # Call the Drive v3 API
     ins = "SELECT leitura, data from ldr where id='1k' and data>='"+ hoje +" 00:00:00' and data<='"+ hoje +" 23:59:59' order by data"  
-    cursor.execute(ins)
-    print(cursor)    
+    cursor.execute(ins)   
     with open("ldr_1k_"+ hoje +".csv", "w") as csv_file:              # Python 2 version
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(['Leitura', 'Data']) # write headers
         csv_writer.writerows(cursor)
     file_metadata = {
-        'name': 'ldr_1k_'+hoje,
-        'mimeType': 'application/vnd.google-apps.spreadsheet'
+        'name': 'ldr_1k_'+hoje
     }
     media = MediaFileUpload('ldr_1k_'+ hoje +'.csv',
                             mimetype='text/csv',
@@ -65,8 +63,7 @@ def main():
         csv_writer.writerow(['Leitura', 'Data']) # write headers
         csv_writer.writerows(cursor)
     file_metadata = {
-        'name': 'ldr_750_'+hoje,
-        'mimeType': 'application/vnd.google-apps.spreadsheet'
+        'name': 'ldr_750_'+hoje
     }
     media = MediaFileUpload('ldr_750_'+ hoje +'.csv',
                             mimetype='text/csv',
@@ -82,8 +79,7 @@ def main():
         csv_writer.writerow(['Leitura', 'Data']) # write headers
         csv_writer.writerows(cursor)
     file_metadata = {
-        'name': 'ldr_470_'+hoje,
-        'mimeType': 'application/vnd.google-apps.spreadsheet'
+        'name': 'ldr_470_'+hoje
     }
     media = MediaFileUpload('ldr_470_'+ hoje +'.csv',
                             mimetype='text/csv',
@@ -94,15 +90,13 @@ def main():
 
     ins = "SELECT tensao,leitura,data from piranometro where data>='"+ hoje +" 00:00:00' and data<='"+ hoje +" 23:59:59' order by data"
     cursor.execute(ins)
-	print(cursor)
     with open("piranometro_"+hoje+".csv", "w") as csv_file:              # Python 2 version
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(['Tensão','Leitura', 'Data']) # write headers
         csv_writer.writerows(cursor)
     
     file_metadata = {
-        'name': 'piranometro_'+hoje,
-        'mimeType': 'application/vnd.google-apps.spreadsheet'
+        'name': 'piranometro_'+hoje
     }
     media = MediaFileUpload('piranometro_'+ hoje +'.csv',
                             mimetype='text/csv',
@@ -119,8 +113,7 @@ def main():
         csv_writer.writerows(cursor)
     
     file_metadata = {
-        'name': 'dht_'+hoje,
-        'mimeType': 'application/vnd.google-apps.spreadsheet'
+        'name': 'dht_'+hoje
     }
     media = MediaFileUpload('dht_'+ hoje +'.csv',
                             mimetype='text/csv',
@@ -137,8 +130,7 @@ def main():
         csv_writer.writerows(cursor)
 
     file_metadata = {
-        'name': 'tensao_corrente_'+hoje,
-        'mimeType': 'application/vnd.google-apps.spreadsheet'
+        'name': 'tensao_corrente_'+hoje
     }
     media = MediaFileUpload('tensao_corrente_'+ hoje +'.csv',
                             mimetype='text/csv',
