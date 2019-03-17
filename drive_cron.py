@@ -39,7 +39,7 @@ def main():
 
     drive_service = build('drive', 'v3', credentials=creds)
     # Call the Drive v3 API
-    ins = "SELECT leitura, data from ldr where id='1k' and data>=2019-03-17 00:00:00 and data<=2019-03-17 23:59:59 order by data"  
+    ins = "SELECT leitura, data from ldr where id='1k' and data>='2019-03-17 00:00:00' and data<='2019-03-17 23:59:59' order by data"  
     cursor.execute(ins)
     with open("ldr_1k_2019-03-17.csv", "w") as csv_file:              # Python 2 version
         csv_writer = csv.writer(csv_file)
