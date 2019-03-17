@@ -102,7 +102,7 @@ def main():
         'name': 'piranometro_'+hoje,
         'mimeType': 'application/vnd.google-apps.spreadsheet'
     }
-    media = MediaFileUpload('piranometro'+ hoje +'.csv',
+    media = MediaFileUpload('piranometro_'+ hoje +'.csv',
                             mimetype='text/csv',
                             resumable=True)
     file = drive_service.files().create(body=file_metadata,
@@ -120,7 +120,7 @@ def main():
         'name': 'dht_'+hoje,
         'mimeType': 'application/vnd.google-apps.spreadsheet'
     }
-    media = MediaFileUpload('dht'+ hoje +'.csv',
+    media = MediaFileUpload('dht_'+ hoje +'.csv',
                             mimetype='text/csv',
                             resumable=True)
     file = drive_service.files().create(body=file_metadata,
@@ -138,7 +138,7 @@ def main():
         'name': 'tensao_corrente_'+hoje,
         'mimeType': 'application/vnd.google-apps.spreadsheet'
     }
-    media = MediaFileUpload('tensao_corrente'+ hoje +'.csv',
+    media = MediaFileUpload('tensao_corrente_'+ hoje +'.csv',
                             mimetype='text/csv',
                             resumable=True)
     file = drive_service.files().create(body=file_metadata,
