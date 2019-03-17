@@ -42,6 +42,7 @@ def main():
     # Call the Drive v3 API
     ins = "SELECT leitura, data from ldr where id='1k' and data>='"+ hoje +" 00:00:00' and data<='"+ hoje +" 23:59:59' order by data"  
     cursor.execute(ins)
+    print(cursor)    
     with open("ldr_1k_"+ hoje +".csv", "w") as csv_file:              # Python 2 version
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(['Leitura', 'Data']) # write headers
