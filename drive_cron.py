@@ -93,6 +93,7 @@ def main():
 
     ins = "SELECT tensao,leitura,data from piranometro where data>='"+ hoje +" 00:00:00' and data<='"+ hoje +" 23:59:59' order by data"
     cursor.execute(ins)
+	print(cursor)
     with open("piranometro_"+hoje+".csv", "w") as csv_file:              # Python 2 version
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(['Tensão','Leitura', 'Data']) # write headers
