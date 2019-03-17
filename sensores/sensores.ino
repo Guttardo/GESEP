@@ -69,14 +69,14 @@ void setup(void)
 void loop(void) 
 { 
 
-  Serial.write("T\n");
+  Serial.write("T");
   postDHT();
   postLDRs();
   postTenCor();
   postPiranometro();
   //postTermopar();
 
-  delay(3000);
+  delay(1000);
 
 }
 
